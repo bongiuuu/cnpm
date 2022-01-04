@@ -1,0 +1,16 @@
+D:\Loan\FinalProjectCNPM\FinalCNPM_Winform\FinalCNPM_Winform\bin\Debug\FinalCNPM_Winform.exe
+D:\Loan\FinalProjectCNPM\FinalCNPM_Winform\FinalCNPM_Winform\bin\Debug\EntityFramework.dll
+D:\Loan\FinalProjectCNPM\FinalCNPM_Winform\FinalCNPM_Winform\bin\Debug\EntityFramework.SqlServer.dll
+D:\Loan\FinalProjectCNPM\FinalCNPM_Winform\FinalCNPM_Winform\bin\Debug\FinalCNPM_Winform.exe.config
+D:\Loan\FinalProjectCNPM\FinalCNPM_Winform\FinalCNPM_Winform\bin\Debug\FinalCNPM_Winform.pdb
+D:\Loan\FinalProjectCNPM\FinalCNPM_Winform\FinalCNPM_Winform\bin\Debug\EntityFramework.xml
+D:\Loan\FinalProjectCNPM\FinalCNPM_Winform\FinalCNPM_Winform\bin\Debug\EntityFramework.SqlServer.xml
+D:\Loan\FinalProjectCNPM\FinalCNPM_Winform\FinalCNPM_Winform\obj\Debug\FinalCNPM_Winform.csproj.SuggestedBindingRedirects.cache
+D:\Loan\FinalProjectCNPM\FinalCNPM_Winform\FinalCNPM_Winform\obj\Debug\FinalCNPM_Winform.MainMenu.resources
+D:\Loan\FinalProjectCNPM\FinalCNPM_Winform\FinalCNPM_Winform\obj\Debug\FinalCNPM_Winform.Properties.Resources.resources
+D:\Loan\FinalProjectCNPM\FinalCNPM_Winform\FinalCNPM_Winform\obj\Debug\FinalCNPM_Winform.csproj.GenerateResource.cache
+D:\Loan\FinalProjectCNPM\FinalCNPM_Winform\FinalCNPM_Winform\obj\Debug\FinalCNPM_Winform.csproj.CoreCompileInputs.cache
+D:\Loan\FinalProjectCNPM\FinalCNPM_Winform\FinalCNPM_Winform\obj\Debug\FinalCNPM_Winform.csproj.CopyComplete
+D:\Loan\FinalProjectCNPM\FinalCNPM_Winform\FinalCNPM_Winform\obj\Debug\FinalCNPM_Winform.exe
+D:\Loan\FinalProjectCNPM\FinalCNPM_Winform\FinalCNPM_Winform\obj\Debug\FinalCNPM_Winform.pdb
+D:\Loan\FinalProjectCNPM\FinalCNPM_Winform\FinalCNPM_Winform\obj\Debug\FinalCNPM_Winform.csproj.AssemblyReference.cache
