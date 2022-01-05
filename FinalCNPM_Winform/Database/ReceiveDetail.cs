@@ -6,15 +6,15 @@ namespace FinalCNPM_Winform.Database
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("OrderDetail")]
-    public partial class OrderDetail
+    [Table("ReceiveDetail")]
+    public partial class ReceiveDetail
     {
         [Key]
         [Column(Order = 0)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int id { get; set; }
 
-        public int orderId { get; set; }
+        public int receiveId { get; set; }
 
         public int productId { get; set; }
 
@@ -25,15 +25,6 @@ namespace FinalCNPM_Winform.Database
         public string name { get; set; }
 
         public decimal? totalPrice { get; set; }
-
-        [StringLength(50)]
-        public string status { get; set; }
-
-        [StringLength(50)]
-        public string paymentMethod { get; set; }
-
-        [StringLength(50)]
-        public string paymentStatus { get; set; }
 
         public DateTime? createTime { get; set; }
 

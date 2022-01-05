@@ -8,7 +8,7 @@ namespace FinalCNPM_Winform.Database
     public partial class CnpmDb : DbContext
     {
         public CnpmDb()
-               : base("data source=DESKTOP-ABAJU1U\\SQLEXPRESS;Initial Catalog=Store;Integrated Security=True")
+               : base("data source=BIENHOA\\SQLEXPRESS;Initial Catalog=Store;Integrated Security=True")
         {
         }
 

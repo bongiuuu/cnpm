@@ -14,5 +14,7 @@ namespace FinalCNPM_Winform.Database
         public DateTime? createTime { get; set; }
 
         public int orderId { get; set; }
+
+        public decimal? totalPrice { get; set; }
     }
 }

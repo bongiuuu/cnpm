@@ -21,6 +21,17 @@ namespace FinalCNPM_Winform
             var response = context.Database.SqlQuery<Order>("GetAllAgentOrders").ToList();
             return response;
         }
+        public List<ReceiveDetail> gelectAllReceiveNotes()
+        {
+            var response = context.Database.SqlQuery<ReceiveDetail>("[SelectAllReceiveNotes]").ToList();
+            return response;
+        }
+        
+        public List<Order> GetAllDeliveryAgentsPaid()
+        {
+            var response = context.Database.SqlQuery<Order>("GetAllAgentOrdersPaid").ToList();
+            return response;
+        }
 
         public List<OrderDetail> getProductsFromOrderNote(int orderNoteId)
         {
@@ -29,6 +40,26 @@ namespace FinalCNPM_Winform
                 new SqlParameter("@OrderNoteId", orderNoteId),
             };
             var response = context.Database.SqlQuery<OrderDetail>("SelectProductsFromOrderNotes @OrderNoteId", sqlParam).ToList();
+            return response;
+        }
+
+        public List<OrderDetail> getProductsFromOrderNoteDelivery(int orderNoteId)
+        {
+            object[] sqlParam =
+            {
+                new SqlParameter("@OrderNoteId", orderNoteId),
+            };
+            var response = context.Database.SqlQuery<OrderDetail>("SelectProductsFromOrderNotesDelivery @OrderNoteId", sqlParam).ToList();
+            return response;
+        }
+
+        public List<ReceiveDetail> getProductsFromReceiveNote(int @noteId)
+        {
+            object[] sqlParam =
+            {
+                new SqlParameter("@noteId", @noteId),
+            };
+            var response = context.Database.SqlQuery<ReceiveDetail>("SelectProductsFromReceiveNote @noteId", sqlParam).ToList();
             return response;
         }
 

@@ -36,10 +36,14 @@ namespace FinalCNPM_Winform
             setupHeader();
 
             getProducts();
+
+      
         }
 
         private void setupHeader()
         {
+            tbYear.Text = "2022";
+
             listView1.Columns.Add("Mã Đơn Hàng", 80);
             listView1.Columns.Add("Ngày Đặt Hàng", 180);
             listView1.Columns.Add("Tổng giá", 150);
@@ -197,7 +201,26 @@ namespace FinalCNPM_Winform
 
         private void cbbDelivery_Receive_SelectedIndexChanged(object sender, EventArgs e)
         {
+            string selectedEmployee = (string)cbbDelivery_Receive.SelectedItem;
 
+            int count = 0;
+
+            int resultIndex = -1;
+
+            // Call the FindStringExact method to find the first 
+            // occurrence in the list.
+            resultIndex = cbbDelivery_Receive.FindStringExact(selectedEmployee);
+            listView5.Items.Clear();
+            if (resultIndex == 0)
+            {
+                setupDeliveryListView();
+            } else
+            {
+                setupReceiveListView();
+            }
+
+
+            
         }
 
         private void dataGridView3_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -467,11 +490,93 @@ namespace FinalCNPM_Winform
         private void btnReport_Click(object sender, EventArgs e)
         {
             var dbHelper = new Dbhelper();
-            var fromDate = "2021/" + currentMonth.ToString() + "/01";
-            var toDate = "2021/" + currentMonth.ToString() + "/30";
+            var endDate = 30;
+            if(currentMonth == 2)
+            {
+                endDate = 28;
+            }
+
+            var fromDate = "2022/" + currentMonth.ToString() + "/01";
+            var toDate = "2022/" + currentMonth.ToString() + "/"+ endDate;
+            listView6.Items.Clear();
             var deliveryNotes = dbHelper.getDeliveryNoteFromMonth(fromDate, toDate);
-            MessageBox.Show((deliveryNotes.Count + fromDate + " - " + toDate));
-            var test = 0;
+            /*        MessageBox.Show((fromDate + " - " + toDate + " " + deliveryNotes.Count));
+                    var test = 0;*/
+
+            if(deliveryNotes == null || deliveryNotes.Count == 0)
+            {
+                MessageBox.Show("Dữ liệu trống!");
+                label16.Text = "Tổng: 0";
+                return;
+            }
+
+            var totalDeliveryNotePrice = 0;
+            for (int num = 0; num < deliveryNotes.Count; num++)
+            {
+                var orderDetail = deliveryNotes[num];
+                totalDeliveryNotePrice  = (int)(totalDeliveryNotePrice + orderDetail.totalPrice);
+                listView6.Items.Add(new ListViewItem(new string[] { orderDetail.id.ToString(), orderDetail.createTime.ToString(),orderDetail.totalPrice.ToString() }));
+            }
+
+            label16.Text = "Tổng: " + totalDeliveryNotePrice.ToString() + " VND";
+           
+        }
+
+        private void setupDeliveryListView()
+        {
+            var dbHelper = new Dbhelper();
+            var orderPaid = dbHelper.GetAllDeliveryAgentsPaid();
+            var orderDetails = new List<OrderDetail>();
+            for (int num = 0; num < orderPaid.Count; num++)
+            {
+                var productFromOder = dbHelper.getProductsFromOrderNote(orderPaid[num].id);
+                if(productFromOder != null)
+                {
+                    orderDetails.AddRange(productFromOder);
+                }
+            }
+
+            for (int num = 0; num < orderDetails.Count; num++)
+            {
+                var orderDetail = orderDetails[num];
+                var totalPriceItem = (int)(orderDetail.price * orderDetail.quantity);
+                totalPrice = (int)(totalPrice + orderDetail.totalPrice);
+                listView5.Items.Add(new ListViewItem(new string[] { orderDetail.orderId.ToString(), orderDetail.productId.ToString(), orderDetail.name, orderDetail.quantity.ToString(), String.Format("{0:0,0}", orderDetail.price), String.Format("{0:0,0}", totalPriceItem), orderDetail.createTime.ToString() }));
+            }
+
+        }
+
+        private void setupReceiveListView()
+        {
+            var dbHelper = new Dbhelper();
+            var receiveDetails = dbHelper.gelectAllReceiveNotes();
+            var orderDetails = new List<ReceiveDetail>();
+            for (int num = 0; num < receiveDetails.Count; num++)
+            {
+                var productFromOder = dbHelper.getProductsFromReceiveNote(receiveDetails[num].id);
+                if (productFromOder != null)
+                {
+                    orderDetails.AddRange(productFromOder);
+                }
+            }
+
+            for (int num = 0; num < orderDetails.Count; num++)
+            {
+                var orderDetail = orderDetails[num];
+                var totalPriceItem = (int)(orderDetail.price * orderDetail.quantity);
+                totalPrice = (int)(totalPrice + orderDetail.totalPrice);
+                listView5.Items.Add(new ListViewItem(new string[] { orderDetail.receiveId.ToString(), orderDetail.productId.ToString(), orderDetail.name, orderDetail.quantity.ToString(), String.Format("{0:0,0}", orderDetail.price), String.Format("{0:0,0}", totalPriceItem), orderDetail.createTime.ToString() }));
+            }
+        }
+
+        private void label16_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tbYear_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

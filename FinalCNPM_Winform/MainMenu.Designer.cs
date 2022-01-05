@@ -178,6 +178,7 @@ namespace FinalCNPM_Winform
             this.tbYear.Name = "tbYear";
             this.tbYear.Size = new System.Drawing.Size(176, 20);
             this.tbYear.TabIndex = 31;
+            this.tbYear.TextChanged += new System.EventHandler(this.tbYear_TextChanged);
             // 
             // listView5
             // 
@@ -214,6 +215,7 @@ namespace FinalCNPM_Winform
             this.label16.Size = new System.Drawing.Size(35, 15);
             this.label16.TabIndex = 17;
             this.label16.Text = "Tổng";
+            this.label16.Click += new System.EventHandler(this.label16_Click);
             // 
             // label18
             // 

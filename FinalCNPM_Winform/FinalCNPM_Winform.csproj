@@ -60,6 +60,7 @@
     <Compile Include="Database\DeliveryProduct.cs" />
     <Compile Include="Database\CnpmDb.cs" />
     <Compile Include="Database\Order.cs" />
+    <Compile Include="Database\ReceiveDetail.cs" />
     <Compile Include="Database\OrderDetail.cs" />
     <Compile Include="Database\OrderProduct.cs" />
     <Compile Include="Database\Product.cs" />
