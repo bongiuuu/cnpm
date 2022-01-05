@@ -13,13 +13,6 @@ namespace FinalCNPM_Winform.Database
 
         public DateTime? createTime { get; set; }
 
-        [StringLength(50)]
-        public string status { get; set; }
-
-        [StringLength(50)]
-        public string paymentMethod { get; set; }
-
-        [StringLength(50)]
-        public string paymentStatus { get; set; }
+        public int orderId { get; set; }
     }
 }

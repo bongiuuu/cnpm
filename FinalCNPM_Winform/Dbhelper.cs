@@ -25,10 +25,9 @@ namespace FinalCNPM_Winform
         public List<OrderDetail> getProductsFromOrderNote(int orderNoteId)
         {
             object[] sqlParam =
-             {
+            {
                 new SqlParameter("@OrderNoteId", orderNoteId),
             };
-
             var response = context.Database.SqlQuery<OrderDetail>("SelectProductsFromOrderNotes @OrderNoteId", sqlParam).ToList();
             return response;
         }
@@ -54,14 +53,12 @@ namespace FinalCNPM_Winform
         public void updateOrderStatus(int @orderId)
         {
             // Convert Cho xac nhan to Dang giao - OrderId UpdateOrderStatus
-            object[] sqlParam =
-          {
+            object[] sqlParam = 
+            {
                 new SqlParameter("@id", @orderId)
-       
             };
             var response = context.Database.ExecuteSqlCommandAsync("UpdateOrderStatus @id", sqlParam);
             response.Wait();
-
         }
         
         public List<Product> getAllProducts()
@@ -72,39 +69,32 @@ namespace FinalCNPM_Winform
 
         public Product getProductFromId(int @productId)
         {
-
-            object[] sqlParam =
-      {
+            object[] sqlParam = 
+            {
                 new SqlParameter("@productId", @productId)
-
             };
             var response = context.Database.SqlQuery<Product>("SelecProductFromId @productId", sqlParam).SingleOrDefault();
             return response;
         }
         
 
-             public void updateProductQuantity(int @productId, int @quantity)
+        public void updateProductQuantity(int @productId, int @quantity)
         {
-
-            object[] sqlParam =
-      {
+            object[] sqlParam = 
+            {
                 new SqlParameter("@productId", @productId),
                 new SqlParameter("@quantity", @quantity)
-
             };
             var response = context.Database.ExecuteSqlCommandAsync("UpdateProductQuantity @productId, @quantity", sqlParam);
             response.Wait();
-          
         }
 
-        public List<DeliveryNote> getDeliveryNoteFromMonth(DateTime @fromDate, DateTime @toDate)
+        public List<DeliveryNote> getDeliveryNoteFromMonth(string @fromDate, string @toDate)
         {
-
-            object[] sqlParam =
-      {
+            object[] sqlParam = 
+            {
                 new SqlParameter("@fromDate", @fromDate),
                 new SqlParameter("@toDate", @toDate)
-
             };
             var response = context.Database.SqlQuery<DeliveryNote>("GETDELIVERYNOTEFROMMONTH @fromDate, @toDate", sqlParam).ToList();
             return response;

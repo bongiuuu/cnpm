@@ -53,8 +53,8 @@ namespace FinalCNPM_Winform
             listView2.Columns.Add("Giá", 100);
             listView2.Columns.Add("Tổng giá", 120);
 
-            listView3.Columns.Add("Mã Đơn Hàng", 100);
-            listView3.Columns.Add("Tên Sản Phẩm", 450);
+            listView3.Columns.Add("Mã Đơn Hàng", 104);
+            listView3.Columns.Add("Tên Sản Phẩm", 405);
             listView3.Columns.Add("Số lượng", 100);
             listView3.Columns.Add("Giá", 100);
             listView3.Columns.Add("Tổng giá", 120);
@@ -72,6 +72,17 @@ namespace FinalCNPM_Winform
             listView6.Columns.Add("Tổng giá", 170);
         }
 
+        private int totalOrderPrice(List<OrderDetail> orderDetails)
+        {
+            totalPrice = 0;
+            for (int num = 0; num < orderDetails.Count; num++)
+            {
+                var orderDetail = orderDetails[num];
+                var totalPriceItem = (int)(orderDetail.price * orderDetail.quantity);
+                totalPrice = (int)(totalPrice + orderDetail.totalPrice);
+            }
+            return totalPrice;
+        }
 
         private void LoadListView()
         {
@@ -81,7 +92,12 @@ namespace FinalCNPM_Winform
             for (int num = 0; num < orderAgents.Count; num++)
             {
                 var orderAgent = orderAgents[num];
-                listView1.Items.Add(new ListViewItem(new string[] { "" + orderAgent.id, orderAgent.createTime.ToString(), orderAgent.status, orderAgent.paymentMethod, orderAgent.paymentStatus }));
+                var orderDetailId = orderAgent.id;
+                var dbHelper = new Dbhelper();
+                var productList = dbHelper.getProductsFromOrderNote(orderDetailId);
+                var totalPrice = totalOrderPrice(productList);
+
+                listView1.Items.Add(new ListViewItem(new string[] { "" + orderAgent.id, orderAgent.createTime.ToString(), String.Format("{0:0,0}", totalPrice), orderAgent.status, orderAgent.paymentMethod, orderAgent.paymentStatus }));
             }
         }
 
@@ -96,7 +112,6 @@ namespace FinalCNPM_Winform
                 totalPrice = (int)(totalPrice + orderDetail.totalPrice);
                 listView2.Items.Add(new ListViewItem(new string[] { orderId2.ToString(), orderDetail.name, orderDetail.quantity.ToString(), String.Format("{0:0,0}", orderDetail.price), String.Format("{0:0,0}", totalPriceItem) , orderDetail.status, orderDetail.paymentMethod, orderDetail.paymentStatus }));
             }
-
             this.label14.Text = "Tổng: " + String.Format("{0:0,0}", totalPrice) + " (VND)";
 
         }
@@ -135,7 +150,7 @@ namespace FinalCNPM_Winform
             // Call the FindStringExact method to find the first 
             // occurrence in the list.
             resultIndex = cbbMonth.FindStringExact(selectedEmployee);
-            currentMonth = resultIndex;
+            currentMonth = resultIndex + 1;
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -226,14 +241,12 @@ namespace FinalCNPM_Winform
             listView2.Items.Clear();
             var dbHelper = new Dbhelper();
  
-             products = dbHelper.getProductsFromOrderNote(orderId2);
+            products = dbHelper.getProductsFromOrderNote(orderId2);
             if (products != null && products.Count > 0)
             {
   
                 setupListView2(products);
             }
-
-   
         }
 
         private void listView2_SelectedIndexChanged(object sender, EventArgs e)
@@ -307,13 +320,17 @@ namespace FinalCNPM_Winform
         private void setupListView3(List<Product> products)
         {
             listView3.Items.Clear();
+            totalPrice = 0;
             for (int num = 0; num < products.Count; num++)
             {
                 var orderAgent = products[num];
-                listView3.Items.Add(new ListViewItem(new string[] { "" + orderAgent.id, orderAgent.name, orderAgent.quantity.ToString(), orderAgent.price.ToString(), orderAgent.name }));
+                var totalPriceItem = (int)(orderAgent.price * orderAgent.quantity);
+                totalPrice = (int)(totalPrice + totalPriceItem);
+                listView3.Items.Add(new ListViewItem(new string[] { "" + orderAgent.id, orderAgent.name, orderAgent.quantity.ToString(), String.Format("{0:0,0}", orderAgent.price), String.Format("{0:0,0}", totalPriceItem) }));
             
             }
-          
+            this.label15.Text = "Tổng: " + String.Format("{0:0,0}", totalPrice) + " (VND)";
+
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -349,18 +366,13 @@ namespace FinalCNPM_Winform
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-         
-
             for (int i = 0; i < productsToUpdate.Count; i++)
             {
                 if(productsToUpdate[i].name.Equals(currentProductName))
                 {
                     productsToUpdate.RemoveAt(i);
                 }
-               
             }
-
-           
             setupListView3(productsToUpdate);
         }
 
@@ -378,8 +390,6 @@ namespace FinalCNPM_Winform
             {
                 MessageBox.Show("Chưa chọn sản phẩm để tạo đơn!");
             }
-            
-
         }
 
         int convertStringToInt(String input)
@@ -456,7 +466,12 @@ namespace FinalCNPM_Winform
 
         private void btnReport_Click(object sender, EventArgs e)
         {
-            
+            var dbHelper = new Dbhelper();
+            var fromDate = "2021/" + currentMonth.ToString() + "/01";
+            var toDate = "2021/" + currentMonth.ToString() + "/30";
+            var deliveryNotes = dbHelper.getDeliveryNoteFromMonth(fromDate, toDate);
+            MessageBox.Show((deliveryNotes.Count + fromDate + " - " + toDate));
+            var test = 0;
         }
     }
 }
